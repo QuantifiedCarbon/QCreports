@@ -22,7 +22,7 @@ def merge_columns(df):
     for remove_subdivision in remove_subdivisions:
         remove_str = f"_{remove_subdivision}"
         df.columns = [col.replace(remove_str, '') for col in df.columns]
-        df = df.groupby(level=0, axis=1).sum()
+        df = df.T.groupby(level=0).sum().T
     return df
 
 def get_plot_definitions(method, title, xlabel, ylabel):
@@ -77,4 +77,3 @@ def get_bake_resources(xls):
     resource_columns = list(set(resource_columns))
     bake_resources = resource_columns + ["demand"]
     return bake_resources
-
