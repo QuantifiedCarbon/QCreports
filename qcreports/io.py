@@ -106,7 +106,13 @@ def add_QCplots(plotter, xls, sheet_name):
     else:
         df1 = df[0]
         df2 = df[1]
-        if method == "combo_line_stacked":
+        if method == "combo_dashed_line":
+            plotter.combo_dashed_line(data1=df1, data2=df2, worksheet=sheet_name, plot_text=plot_text)
+        elif method == "combo_line_dashed":
+            plotter.combo_line_dashed(data1=df1, data2=df2, worksheet=sheet_name, plot_text=plot_text)
+        elif method == "combo_plot_forced_line_forced_dashed":
+            plotter.combo_plot_forced_line_forced_dashed(data1=df1, data2=df2, worksheet=sheet_name, plot_text=plot_text)
+        elif method == "combo_line_stacked":
             plotter.combo_line_stacked(data1=df1, data2=df2, worksheet=sheet_name, plot_text=plot_text)
         elif method == "combo_dashed_stacked":
             plotter.combo_dashed_stacked(data1=df1, data2=df2, worksheet=sheet_name, plot_text=plot_text)
