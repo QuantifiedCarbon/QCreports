@@ -62,7 +62,8 @@ def get_worksheets(tags):
         df = df.filter(regex=f"_{zone}$")
         df.columns = [column.rsplit("_", 1)[0] for column in df.columns]
         df = df.rename(columns=rename_dictionary)
-        df = merge_columns(df).sort_index(axis=1)
+#        df = merge_columns(df)
+        df = df.sort_index(axis=1)
         plot_definitions = get_plot_definitions(method="stacked", title=sheet_name, xlabel="year", ylabel="GW")
         worksheets.append(get_worksheet(sheet_name=sheet_name, df=df, plot_definitions=plot_definitions))
 
@@ -82,7 +83,8 @@ def get_worksheets(tags):
         df2 = df2.filter(regex=f"_{zone}$")
         df2.columns = [column.rsplit("_", 1)[0] for column in df2.columns]
         df2 = df2.rename(columns=rename_dictionary)
-        df2 = merge_columns(df2).sort_index(axis=1)
+#        df2 = merge_columns(df2)
+        df2 = df2.sort_index(axis=1)
         plot_definitions = get_plot_definitions(method="combo_line_stacked", title=sheet_name, xlabel="year", ylabel="TWh/year")
         worksheets.append(get_worksheet(sheet_name=sheet_name, df=[df1, df2], plot_definitions=plot_definitions))
 
