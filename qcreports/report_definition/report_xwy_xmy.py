@@ -22,6 +22,7 @@ def get_worksheets(tags):
         df = df[columns + ["mean"]]
         plot_definitions = get_plot_definitions(method="line", title=sheet_name, xlabel="year", ylabel="€/MWh")
         worksheets.append(get_worksheet(sheet_name=sheet_name, df=df, plot_definitions=plot_definitions))
+
 #        df1 = df[["mean"]]
 #        df2 = df[columns]
 #        plot_definitions = get_plot_definitions(method="combo_dashed_line", title=sheet_name, xlabel="year", ylabel="€/MWh")
