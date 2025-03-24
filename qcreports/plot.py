@@ -12,7 +12,7 @@ def generate_inputs_ixyz_nordics(tags, output_file_name="input_data.xlsx"):
     idx = np.argsort(wys)
     ids = ids[idx]
     zones = ["DK1", "DK2", "FI", "NO125", "NO3", "NO4", "SE1", "SE2", "SE3", "SE4"]
-    index_names = ["wind_total_generation", "hydro_total_inflow", "mean_price"]
+    index_names = ["total_wind_generation", "total_hydro_inflow", "mean_price"]
     with pd.ExcelWriter(output_file_name, engine="openpyxl") as writer:
         for idi in ids:
             root = cgriddb.get_result_dict(idi)
@@ -22,15 +22,15 @@ def generate_inputs_ixyz_nordics(tags, output_file_name="input_data.xlsx"):
                 print(wy, zone)
                 wind_names = root.resources.keys()
                 wind_names = [n for n in wind_names if n.startswith("wind_") and n.endswith(f"_{zone}")]
-                wind_total_generation = 0
+                total_wind_generation = 0
                 for wind_name in wind_names:
-                    wind_total_generation += root.resources[wind_name].total_generation
+                    total_wind_generation += root.resources[wind_name].total_generation
                 if f"hydro_{zone}" in root.hydro_resources.keys():
-                    hydro_total_inflow = root.hydro_resources[f"hydro_{zone}"].inflow.sum()
+                    total_hydro_inflow = root.hydro_resources[f"hydro_{zone}"].inflow.sum()
                 else:
-                    hydro_total_inflow = 0
+                    total_hydro_inflow = 0
                 mean_price = root.zones[zone].mean_price
-                data = [wind_total_generation, hydro_total_inflow, mean_price]
+                data = [total_wind_generation, total_hydro_inflow, mean_price]
 
                 df = pd.DataFrame(data, columns=[zone], index=index_names)
                 list_df.append(df)

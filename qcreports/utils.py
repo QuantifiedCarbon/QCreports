@@ -52,6 +52,7 @@ def get_df_from_worksheet(xls, sheet_name):
     plot_definitions = plot_definitions.T
     method = plot_definitions.loc["plot_definitions", "method"]
     df = df_worksheet.iloc[:, :ip-2]
+    df = df.dropna(how="all")
     if method.startswith("combo_"):
         ic = [i for i, column in enumerate(df.columns) if column.startswith("Unnamed")]
         ic = ic[1]

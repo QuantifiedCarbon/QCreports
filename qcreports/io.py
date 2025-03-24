@@ -126,7 +126,7 @@ def generate_QCplots(input_file_name="report_data.xlsx", output_file_name=None):
         output_file_name = input_file_name.split(".")[0] + "_QCplots.xlsx"
     with QCplots.QCPlot(output_file_name) as plotter:
         plotter.bake_resources(bake_resources)  
-        for sheet_name in xls.sheet_names:
+        for sheet_name in xls.sheet_names:            
             add_QCplots(plotter, xls, sheet_name)
 
 def generate_QCmaps(zones="all", years="all", input_file_name="report_data.xlsx", output_file_name=None):
@@ -147,7 +147,7 @@ def generate_QCmaps(zones="all", years="all", input_file_name="report_data.xlsx"
         df = df.loc[years]
         list_df.append(df)
     df = pd.concat(list_df, axis=1)
-    qcmp.COLORMAP = "QC_coolwarm_r"
+    qcmp.COLORMAP = "QC_diverging_r"
     qcmp.HIGHLIGHT_ZONES = zones
     fig = qcmp.plot(df, "Balance (TWh/year)")
     if output_file_name is None:
