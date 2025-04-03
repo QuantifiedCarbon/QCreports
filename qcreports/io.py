@@ -3,6 +3,7 @@ import pandas as pd
 import QCplots
 import qcmaps.plot as qcmp
 from qcreports.utils import get_df_from_worksheet, get_bake_resources
+QCplots.qc_settings.QC_PLOT_BORDER = None
 
 def make_report_data(worksheets, output_file_name="report_data.xlsx"):
     with pd.ExcelWriter(output_file_name, engine="openpyxl") as writer:

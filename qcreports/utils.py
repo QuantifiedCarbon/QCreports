@@ -5,9 +5,10 @@ import pandas as pd
 
 rename_dictionary = {
     "thermal": "bio",
-#    "must_run": "?",
+    "hydro_flexload": "hydro_flex",
     }
-remove_subdivisions = ["existing",]
+#remove_subdivisions = ["existing",]
+remove_subdivisions = ["flex",]
 
 def read_compressed_data(compressed_data):
     try:

@@ -23,7 +23,16 @@ def get_worksheets(tags):
     plot_definitions = get_plot_definitions(method="line", title=sheet_name, xlabel="year", ylabel="%")
     worksheets.append(get_worksheet(sheet_name=sheet_name, df=df, plot_definitions=plot_definitions))
 
-    sheet_name = "capture_rate_wind_onshore"
+    sheet_name = "cap_rate_wind_onshore_existing"
+    df = cgriddb.get_value_with_index(ids, 'resource,capture_rate,^wind_onshore.*', 'my').sort_index(axis=1)
+    df = df.ffill().bfill()
+    columns = [column for column in df.columns if "existing" in column]
+    df = df[columns]
+    df.columns = [column.rsplit("_", 1)[1] for column in df.columns]
+    plot_definitions = get_plot_definitions(method="line", title=sheet_name, xlabel="year", ylabel="-")
+    worksheets.append(get_worksheet(sheet_name=sheet_name, df=df, plot_definitions=plot_definitions))
+
+    sheet_name = "cap_rate_wind_onshore"
     df = cgriddb.get_value_with_index(ids, 'resource,capture_rate,^wind_onshore.*', 'my').sort_index(axis=1)
     df = df.ffill().bfill()
     columns = [column for column in df.columns if "existing" not in column]
@@ -32,7 +41,16 @@ def get_worksheets(tags):
     plot_definitions = get_plot_definitions(method="line", title=sheet_name, xlabel="year", ylabel="-")
     worksheets.append(get_worksheet(sheet_name=sheet_name, df=df, plot_definitions=plot_definitions))
 
-    sheet_name = "capture_rate_wind_offshore"
+    sheet_name = "cap_rate_wind_offshore_existing"
+    df = cgriddb.get_value_with_index(ids, 'resource,capture_rate,^wind_offshore.*', 'my').sort_index(axis=1)
+    df = df.ffill().bfill()
+    columns = [column for column in df.columns if "existing" in column]
+    df = df[columns]
+    df.columns = [column.rsplit("_", 1)[1] for column in df.columns]
+    plot_definitions = get_plot_definitions(method="line", title=sheet_name, xlabel="year", ylabel="-")
+    worksheets.append(get_worksheet(sheet_name=sheet_name, df=df, plot_definitions=plot_definitions))
+
+    sheet_name = "cap_rate_wind_offshore"
     df = cgriddb.get_value_with_index(ids, 'resource,capture_rate,^wind_offshore.*', 'my').sort_index(axis=1)
     df = df.ffill().bfill()
     columns = [column for column in df.columns if "existing" not in column]
@@ -41,7 +59,15 @@ def get_worksheets(tags):
     plot_definitions = get_plot_definitions(method="line", title=sheet_name, xlabel="year", ylabel="-")
     worksheets.append(get_worksheet(sheet_name=sheet_name, df=df, plot_definitions=plot_definitions))
 
-    sheet_name = "capture_rate_solar"
+    sheet_name = "cap_rate_solar_existing"
+    df = cgriddb.get_value_with_index(ids, 'resource,capture_rate,^solar_.*', 'my').sort_index(axis=1)
+    columns = [column for column in df.columns if "existing" in column]
+    df = df[columns]
+    df.columns = [column.rsplit("_", 1)[1] for column in df.columns]
+    plot_definitions = get_plot_definitions(method="line", title=sheet_name, xlabel="year", ylabel="-")
+    worksheets.append(get_worksheet(sheet_name=sheet_name, df=df, plot_definitions=plot_definitions))
+
+    sheet_name = "cap_rate_solar"
     df = cgriddb.get_value_with_index(ids, 'resource,capture_rate,^solar_.*', 'my').sort_index(axis=1)
     columns = [column for column in df.columns if "existing" not in column]
     df = df[columns]
@@ -62,7 +88,7 @@ def get_worksheets(tags):
         df = df.filter(regex=f"_{zone}$")
         df.columns = [column.rsplit("_", 1)[0] for column in df.columns]
         df = df.rename(columns=rename_dictionary)
-#        df = merge_columns(df)
+        df = merge_columns(df)
         df = df.sort_index(axis=1)
         plot_definitions = get_plot_definitions(method="stacked", title=sheet_name, xlabel="year", ylabel="GW")
         worksheets.append(get_worksheet(sheet_name=sheet_name, df=df, plot_definitions=plot_definitions))
@@ -83,7 +109,7 @@ def get_worksheets(tags):
         df2 = df2.filter(regex=f"_{zone}$")
         df2.columns = [column.rsplit("_", 1)[0] for column in df2.columns]
         df2 = df2.rename(columns=rename_dictionary)
-#        df2 = merge_columns(df2)
+        df2 = merge_columns(df2)
         df2 = df2.sort_index(axis=1)
         plot_definitions = get_plot_definitions(method="combo_line_stacked", title=sheet_name, xlabel="year", ylabel="TWh/year")
         worksheets.append(get_worksheet(sheet_name=sheet_name, df=[df1, df2], plot_definitions=plot_definitions))
