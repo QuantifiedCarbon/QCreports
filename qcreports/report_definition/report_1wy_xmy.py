@@ -3,9 +3,8 @@ import pandas as pd
 import cgriddb
 from qcreports.utils import merge_columns, read_compressed_data, rename_dictionary, get_plot_definitions, get_worksheet
 
-def get_worksheets(tags):
+def get_worksheets(ids):
 
-    ids = cgriddb.get_jobid(comment=tags)
     worksheets = []
 
     sheet_name = "price"
